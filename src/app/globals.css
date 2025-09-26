@@ -1,26 +1,694 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
+@import "tw-animate-css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* AUTHENTIC APPLE LIQUID GLASS STYLES */
+
+/* Class 1: Main liquid glass container with edge-specific refraction */
+.liquidGlass-wrapper {
+  position: relative;
+  display: flex;
+  font-weight: 600;
+  overflow: hidden;
+  color: white;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(3px) saturate(1.3);
+  -webkit-backdrop-filter: blur(3px) saturate(1.3);
+  border-radius: 16px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 1px 0 rgba(255, 255, 255, 0.2) inset,
+    1px 0 0 rgba(255, 255, 255, 0.15) inset;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 2.2);
+}
+
+/* Apple-style edge refraction - only top and left edges */
+.liquidGlass-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.25) 0%,
+    rgba(255, 255, 255, 0.1) 30%,
+    transparent 60%,
+    transparent 100%
+  );
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* Enhanced refraction on specific edges */
+.liquidGlass-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.6) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 100%
+  );
+  border-radius: 2px 0 0 2px;
+  pointer-events: none;
+}
+
+.liquidGlass-effect {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  filter: url(#glass-distortion);
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: inherit;
+}
+
+.liquidGlass-tint {
+  z-index: 1;
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: inherit;
+}
+
+.liquidGlass-shine {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  border-radius: inherit;
+  /* Top edge highlight - Apple signature */
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 1px 0 0 rgba(255, 255, 255, 0.2);
+}
+
+.liquidGlass-text {
+  z-index: 3;
+  position: relative;
+  color: white;
+  font-size: 1rem;
+}
+
+/* Class 2: Enhanced Apple-style surface with configurable edge refraction */
+.liquidGlass-surface {
+  transform: translateZ(0);
+  will-change: transform, box-shadow;
+}
+
+/* Enhanced hover state with stronger edge refraction */
+.liquidGlass-surface:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 
+    0 16px 40px rgba(0, 0, 0, 0.4),
+    0 2px 0 rgba(255, 255, 255, 0.3) inset,
+    2px 0 0 rgba(255, 255, 255, 0.2) inset;
+}
+
+/* Enhanced top edge refraction on hover */
+.liquidGlass-surface:hover::before {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0.2) 40%,
+    transparent 70%,
+    transparent 100%
+  );
+}
+
+/* Enhanced left edge highlight on hover */
+.liquidGlass-surface:hover::after {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 255, 255, 0.4) 60%,
+    transparent 100%
+  );
+  width: 3px;
+}
+
+.liquidGlass-surface:hover .liquidGlass-effect {
+  backdrop-filter: blur(4px) saturate(1.5);
+  -webkit-backdrop-filter: blur(4px) saturate(1.5);
+}
+
+.liquidGlass-surface:hover .liquidGlass-tint {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.liquidGlass-surface:hover .liquidGlass-shine {
+  box-shadow: 
+    inset 0 2px 0 rgba(255, 255, 255, 0.6),
+    inset 2px 0 0 rgba(255, 255, 255, 0.3);
+}
+
+.liquidGlass-surface:active {
+  transform: translateY(-1px) scale(0.98);
+  transition: all 0.15s ease;
+}
+
+/* Alternative edge configurations */
+.liquidGlass-surface.top-right-refraction::before {
+  background: linear-gradient(
+    225deg,
+    rgba(255, 255, 255, 0.25) 0%,
+    rgba(255, 255, 255, 0.1) 30%,
+    transparent 60%,
+    transparent 100%
+  );
+}
+
+.liquidGlass-surface.top-right-refraction::after {
+  left: auto;
+  right: 0;
+  border-radius: 0 2px 2px 0;
+}
+
+.liquidGlass-surface.bottom-left-refraction::before {
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.25) 0%,
+    rgba(255, 255, 255, 0.1) 30%,
+    transparent 60%,
+    transparent 100%
+  );
+}
+
+.liquidGlass-surface.bottom-left-refraction::after {
+  top: auto;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.6) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 100%
+  );
+  border-radius: 0 0 2px 2px;
+}
+
+.liquidGlass-surface.all-edges::before {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+}
+
+.liquidGlass-surface.all-edges::after {
+  display: none;
+}
+
+.liquidGlass-surface.all-edges {
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive optimizations */
+@media (max-width: 768px) {
+  .liquidGlass-surface:hover {
+    transform: translateY(-2px) scale(1.01);
+  }
+
+  .liquidGlass-wrapper::after {
+    width: 1px;
+  }
+
+  .liquidGlass-surface:hover::after {
+    width: 2px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* OTHER STYLES */
+
+/* body {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: url("https://raw.githubusercontent.com/lucasromerodb/liquid-glass-effect-macos/refs/heads/main/assets/flowers.jpg")
+    center center;
+  background-size: 400px;
+  font-family: sans-serif;
+  font-weight: 300;
+
+  animation: moveBackground 60s linear infinite;
+} */
+
+body{
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-family: latto, sans-serif;
+  font-weight: 500;
+  background: #0a0a0a;
+  animation: moveBackground 60s linear infinite;
 }
+
+
+/* 
+GREEN BACKGROUND
+https://media.istockphoto.com/id/1430511443/vector/christmas-mistletoe-foliage-and-berries-vector-seamless-pattern.jpg?s=612x612&w=0&k=20&c=oqxlH7ytgd5yjBQroACirJ1gH7Au1tq8gmsdeGd-Crk=
+
+ORANGE BACKGROUND
+https://images.fineartamerica.com/images/artworkimages/mediumlarge/3/beautiful-orange-and-pastel-flowers-seamless-pattern-julien.jpg
+
+MARGARITAS BACKGROUND
+https://static.vecteezy.com/system/resources/previews/056/652/082/non_2x/hand-drawn-white-flower-seamless-pattern-floral-repeating-wallpaper-for-textile-design-fabric-print-wrapping-paper-cute-daisy-flowers-on-blue-background-repeated-ditsy-texture-vector.jpg
+
+SPRING FLOWERS BACKGROUND
+https://img.freepik.com/free-vector/flat-floral-spring-pattern-design_23-2150117078.jpg
+
+VECTOR WINDS BACKGROUND
+https://i.ibb.co/MDbLn4N4/vectors.png
+
+RED FLOWERS BACKGROUND
+https://www.publicdomainpictures.net/pictures/610000/velka/seamless-floral-wallpaper-art-1715193626Gct.jpg
+*/
+
+a {
+  text-decoration: none;
+}
+
+.wrapper {
+  display: flex;
+  gap: 25px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.menu,
+.menu > div {
+  padding: 0.4rem;
+  border-radius: 1.8rem;
+}
+
+.menu:hover {
+  padding: 0.6rem;
+  border-radius: 1.8rem;
+}
+
+.menu > div > div {
+  font-size: 20px;
+  color: white;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.8rem;
+  transition: all 0.1s ease-in;
+}
+
+.menu > div > div:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+  box-shadow: inset -2px -2px 2px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2px);
+}
+
+.dock {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 2rem;
+  padding: 0.6rem;
+}
+
+.dock,
+.dock > div {
+  border-radius: 2rem;
+}
+
+.dock:hover {
+  padding: 0.8rem;
+  border-radius: 2.5rem;
+}
+
+.dock:hover > div {
+  border-radius: 2.5rem;
+}
+
+.dock img {
+  width: 75px;
+  padding: 0;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 2.2);
+}
+
+.dock img:hover {
+  transform-origin: center center;
+}
+
+.button {
+  padding: 1.5rem 2.5rem;
+  border-radius: 3rem;
+}
+
+.button,
+.button > div {
+  border-radius: 3rem;
+}
+
+.button:hover {
+  padding: 1.8rem 2.8rem;
+}
+
+.button:hover > div {
+  border-radius: 4rem;
+}
+
+.button svg {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 2.2);
+}
+
+.button:hover svg {
+  transform: scale(0.95);
+}
+
+@keyframes moveBackground {
+  from {
+    background-position: 0% 0%;
+  }
+  to {
+    background-position: 0% -1000%;
+  }
+}
+
+/*  */
+
+.mainContentRenkrx8t {
+    position: relative;
+    width: 90%;
+    max-width: 2100px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-radius: 20px;
+    background-color: #ffffff0a;
+    box-shadow: 8px 8px 16px #00000014;
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    min-height: 100px;
+    margin-bottom: 20px;
+    padding: 32px;
+    min-width: 100px;
+}
+
+.mainContentRenkrx8t:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-width: 2px;
+    border-style: solid;
+    border-color: transparent;
+    border-radius: 20px;
+    background-image: linear-gradient(170deg,#fff,#fff0);
+    background-origin: border-box;
+    -webkit-mask-image: linear-gradient(#fff,#fff),linear-gradient(#fff,#fff);
+    mask-image: linear-gradient(#fff,#fff),linear-gradient(#fff,#fff);
+    mask-clip: padding-box,border-box;
+    -webkit-mask-composite: xor,source-over;
+    mask-composite: exclude,add
+}
+
+.mainContentRenkrx8t>img {
+    position: absolute;
+    right: 4%;
+    bottom: 0;
+    width: 56%;
+    height: 2px
+}
+
+.bg{
+    background: #010101;
+    height: 100vh;
+    width: 100vw; 
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+
+/* .glass-card {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 0 8px 4px rgba(255, 255, 255, 0.4);
+  position: relative;
+  overflow: hidden;
+} */
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-radius: 20px;
+  border: 0px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 0 8px 4px rgba(255, 255, 255, 0);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.5),
+    transparent
+  );
+  /* Mask to hide the horizontal glow in top-right and bottom-left corners */
+  mask: 
+    /* Show most of the horizontal line */
+    linear-gradient(black, black),
+    /* Hide top-right corner */
+    radial-gradient(
+      circle at top right,
+      transparent 0px,
+      transparent 8px,
+      black 12px
+    ) right top / 15px 15px no-repeat;
+  mask-composite: add, subtract;
+  -webkit-mask: 
+    linear-gradient(black, black),
+    radial-gradient(
+      circle at top right,
+      transparent 0px,
+      transparent 8px,
+      black 12px
+    ) right top / 15px 15px no-repeat;
+  -webkit-mask-composite: source-over, source-out;
+}
+
+.glass-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    /* Left edge glow */
+    linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.5) 0px,
+      rgba(255, 255, 255, 0.3) 1px,
+      transparent 2px
+    ) left top / 2px 100% no-repeat,
+    /* Right edge glow */
+    linear-gradient(
+      to left,
+      rgba(255, 255, 255, 0.5) 0px,
+      rgba(255, 255, 255, 0.3) 1px,
+      transparent 2px
+    ) right top / 2px 100% no-repeat;
+  pointer-events: none;
+  /* Mask to hide only the corner intersections */
+  mask: 
+    /* Keep most of the element visible */
+    linear-gradient(black, black),
+    /* Hide small top-right corner */
+    radial-gradient(
+      circle at top right,
+      transparent 0px,
+      transparent 8px,
+      black 12px
+    ) right top / 15px 15px no-repeat,
+    /* Hide small bottom-left corner */
+    radial-gradient(
+      circle at bottom left,
+      transparent 0px,
+      transparent 8px,
+      black 12px
+    ) left bottom / 15px 15px no-repeat;
+  mask-composite: add, subtract, subtract;
+  -webkit-mask: 
+    linear-gradient(black, black),
+    radial-gradient(
+      circle at top right,
+      transparent 0px,
+      transparent 8px,
+      black 12px
+    ) right top / 15px 15px no-repeat,
+    radial-gradient(
+      circle at bottom left,
+      transparent 0px,
+      transparent 8px,
+      black 12px
+    ) left bottom / 15px 15px no-repeat;
+  -webkit-mask-composite: source-over, source-out, source-out;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
