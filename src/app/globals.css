@@ -574,7 +574,7 @@ a {
 } */
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.031);
+  background: rgba(255, 255, 255, 0.011);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   border: 0px solid rgba(255, 255, 255, 0.3);
@@ -715,6 +715,21 @@ a {
   border: 0.5px solid #262626;
   background: rgba(38, 38, 38, 0.10);
 }
+
+.white-blurr{
+  width: 125;
+  height: 85;
+  top: 126px;
+  left: 251px;
+  opacity: 1;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 -30px 30px 20px rgb(177, 0, 0);
+  z-index: -2;
+
+
+}
+
 
 @layer base {
   * {
