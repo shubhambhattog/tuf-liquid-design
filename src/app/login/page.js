@@ -5,26 +5,36 @@ const page = () => {
     <div>
       {/* card div */}
       <div className="glass-card w-[372px] h-[350px] rounded-[24px] border text-white flex flex-col mx-auto">
-          <div className="glass-card w-[300px] h-[281px] flex flex-col mx-auto mt-8">
+          <div className="w-[300px] h-[281px] flex flex-col mx-auto mt-8">
 
             <div className='text-3xl font-bold mb-8 mt-4 mx-auto'>
               Login
             </div>
 
             <div>
-              <div>
+              <div className='flex flex-col gap-4'>
 
-                <input type="text" className='w-[300px] h-[40px] bg-transparent border-b border-white outline-none mb-8' placeholder='Enter Username' />
+                <input
+                  type="text"
+                  className="glass-card w-[300px] h-[49px] rounded-[10px] border-[0.5] px-4 outline-none"
+                  placeholder="Username"
+                />
 
-                <input type="password" className='w-[300px] h-[40px] bg-transparent border-b border-white outline-none mb-8' placeholder='Enter Password' />
+                <input
+                  type="password"
+                  className="glass-card w-[300px] h-[49px] rounded-[10px] border-[0.5] px-4 outline-none "
+                  placeholder="Password"
+                />
 
               </div>
-              </div>
 
 
-              <div>
+              <button className='glass-card w-[200px] h-[52px] rounded-[20px] border text-white mx-auto mt-8 text-lg font-semibold flex items-center justify-center'
+                style={{ background: '#EA763F33' }} 
+              >
                 Submit
-              </div>
+              </button>
+
 
             </div>
 
@@ -32,7 +42,6 @@ const page = () => {
 
           </div>
       </div>
-      
     </div>
   )
 }
